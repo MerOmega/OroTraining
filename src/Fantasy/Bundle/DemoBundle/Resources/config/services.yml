@@ -1,0 +1,5 @@
+services:
+    fantasy_demo.layout.data_provider.product:
+        class: 'Fantasy\Bundle\DemoBundle\Layout\DataProvider\ProductProvider'
+        tags:
+            - { name: layout.data_provider, alias: product_stock }

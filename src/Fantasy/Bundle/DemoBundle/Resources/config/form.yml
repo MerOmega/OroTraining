@@ -1,0 +1,5 @@
+services:
+    demo_entity.form.type.demo:
+        class: Fantasy\Bundle\DemoBundle\Form\Type\DemoType
+        tags:
+            - { name: form.type, alias: demo_type_form }

@@ -1,0 +1,7 @@
+/*!
+  backgrid 0.3.8
+  http://github.com/cloudflare/backgrid
+
+  Copyright (c) 2017 Cloudflare, Inc. and contributors <jwong@cloudflare.com>
+  Licensed under the MIT license.
+*/

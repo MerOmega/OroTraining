@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        public: true
+
+    Fantasy\Bundle\DemoBundle\Controller\DemoEntityController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }

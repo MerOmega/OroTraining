@@ -1,0 +1,4 @@
+oro_layout:
+    active_theme: aaxis
+    enabled_themes:
+        - aaxis

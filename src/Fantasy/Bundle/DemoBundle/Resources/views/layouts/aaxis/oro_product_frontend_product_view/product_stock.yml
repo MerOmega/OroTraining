@@ -1,0 +1,21 @@
+layout:
+    imports:
+        - id: oro_product_view
+
+    actions:
+        -   '@setBlockTheme':
+                themes:
+                    'product_stock.html.twig'
+        -   '@add':
+                id: product_stock
+                parentId: product_view_primary_container
+                siblingId: product_view_attribute_group_general_attribute_text_sku
+                blockType: block
+                options:
+                    vars:
+                        product: '=data["product"]'
+#        -   '@add':
+#                id: product_view_product_stock
+#                blockType: block
+#                parentId: product_view_primary_container
+#                siblingId: product_view_attribute_group_general_attribute_text_sku

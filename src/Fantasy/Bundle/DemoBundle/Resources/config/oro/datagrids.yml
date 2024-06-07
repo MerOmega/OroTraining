@@ -1,0 +1,55 @@
+datagrids:
+    demo-entity-grid:
+        extended_entity_name: Fantasy\Bundle\DemoBundle\Entity\DemoEntity
+        source:
+            type: orm
+            query:
+                select:
+                    - d.id
+                    - d.name
+                    - d.description
+                from:
+                    - { table: 'Fantasy\Bundle\DemoBundle\Entity\DemoEntity', alias: d }
+        columns:
+            id:
+                label: 'ID'
+            name:
+                label: 'Name'
+            description:
+                label: 'Description'
+        sorters:
+            columns:
+                name:
+                    data_name: d.name
+            default:
+                name: ASC
+        filters:
+            columns:
+                name:
+                    type: string
+                    data_name: d.name
+        properties:
+            id: ~
+            update_link:
+                type: url
+                route: demo_update
+                params:
+                    - id
+            view_link:
+                type: url
+                route: demo_view
+                params:
+                    - id
+        actions:
+            view:
+                type: navigate
+                label: 'View'
+                link: view_link
+                icon: 'eye'
+                acl_resource: 'demo_view'
+            edit:
+                type: navigate
+                label: 'Edit'
+                link: update_link
+                icon: 'edit'
+                acl_resource: 'demo_update'

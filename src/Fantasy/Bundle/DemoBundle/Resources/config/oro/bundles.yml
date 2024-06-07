@@ -1,0 +1,2 @@
+bundles:
+  - { name: Fantasy\Bundle\DemoBundle\FantasyDemoBundle, priority: 1010 }

@@ -1,0 +1,4 @@
+demo_entity_route:
+    resource: "@FantasyDemoBundle/Controller/DemoEntityController.php"
+    type: annotation
+    prefix: /demo_entity

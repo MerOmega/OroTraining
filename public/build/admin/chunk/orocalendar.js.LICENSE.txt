@@ -1,0 +1,11 @@
+/*!
+ * FullCalendar v3.4.0
+ * Docs & License: https://fullcalendar.io/
+ * (c) 2017 Adam Shaw
+ */
+
+/*!
+ * datepair.js v0.4.17 - A javascript plugin for intelligently selecting date and time ranges inspired by Google Calendar.
+ * Copyright (c) 2021 Jon Thornton - http://jonthornton.github.com/Datepair.js
+ * License: MIT
+ */

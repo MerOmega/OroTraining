@@ -1,0 +1,5 @@
+styles:
+    inputs:
+        - 'bundles/fantasydemo/aaxis/scss/styles.scss'
+        - 'bundles/fantasydemo/aaxis/scss/components/product.scss'
+    output: css/styles.css

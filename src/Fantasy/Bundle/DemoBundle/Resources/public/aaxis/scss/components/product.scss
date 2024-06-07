@@ -1,0 +1,14 @@
+#inventory_status {
+    &.in_stock{
+        color: green;
+    }
+    &.out_of_stock{
+        color: red;
+    }
+    &.discontinued{
+        color: white;
+        background: orange;
+        border-radius: 30px;
+        padding: 0 1em;
+    }
+}
