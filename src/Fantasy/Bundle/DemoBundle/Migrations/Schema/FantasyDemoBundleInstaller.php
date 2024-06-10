@@ -3,6 +3,7 @@
 namespace Fantasy\Bundle\DemoBundle\Migrations\Schema;
 
 use Doctrine\DBAL\Schema\Schema;
+use Fantasy\Bundle\DemoBundle\Entity\DemoEntity;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtensionAwareInterface;
 use Oro\Bundle\EntityExtendBundle\EntityConfig\ExtendScope;
@@ -46,7 +47,7 @@ class FantasyDemoBundleInstaller implements Installation, ExtendExtensionAwareIn
             $schema,
             $table,
             'type',
-            'type_data',
+            DemoEntity::ENUM_CODE_TYPE,
             false,
             false,
             [

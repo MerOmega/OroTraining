@@ -3,6 +3,7 @@
 namespace Fantasy\Bundle\DemoBundle\Form\Type;
 
 use Fantasy\Bundle\DemoBundle\Entity\DemoEntity;
+use Oro\Bundle\EntityExtendBundle\Form\Type\EnumSelectType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,8 +21,8 @@ class DemoType extends AbstractType
                 'label'       => 'Name',
                 'required'    => true
             ]
-        );
-        $builder->add('description', TextType::class,
+        )
+        ->add('description', TextType::class,
             [
                 'constraints' => [new Length(['max' => 200])],
                 'label'       => 'Description',

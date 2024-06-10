@@ -44,6 +44,8 @@ class DemoEntity implements ExtendEntityInterface
 
     use ExtendEntityTrait;
 
+    const ENUM_CODE_TYPE = 'type_data';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

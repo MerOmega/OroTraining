@@ -4,6 +4,7 @@ namespace Fantasy\Bundle\DemoBundle\Migrations\Data\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
+use Fantasy\Bundle\DemoBundle\Entity\DemoEntity;
 use Oro\Bundle\EntityExtendBundle\Entity\Repository\EnumValueRepository;
 use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
 
@@ -21,7 +22,7 @@ class LoadDemoEnumData extends AbstractFixture
      */
     public function load(ObjectManager $manager): void
     {
-        $className = ExtendHelper::buildEnumValueClassName('type_data');
+        $className = ExtendHelper::buildEnumValueClassName(DemoEntity::ENUM_CODE_TYPE);
 
         /** @var EnumValueRepository $enumRepo */
         $enumRepo = $manager->getRepository($className);
