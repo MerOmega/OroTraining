@@ -4,6 +4,11 @@ services:
         tags:
             - { name: layout.data_provider, alias: product_stock }
 
+    fantasy_demo.layout.data_provider.order:
+        class: 'Fantasy\Bundle\DemoBundle\Layout\DataProvider\OrderProvider'
+        tags:
+            - { name: layout.data_provider, alias: order_data }
+
 
     fantasy_demo.event_listener.order_history_listener:
         class: Fantasy\Bundle\DemoBundle\EventListener\OrderHistoryListener

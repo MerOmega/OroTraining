@@ -1,0 +1,12 @@
+layout:
+    actions:
+        -   '@add':
+                id: customer_user
+                blockType: text
+                parentId: order_body_column_left
+                siblingId: order_date
+                prepend: true
+                options:
+                    label: 'Purchased By'
+                    text: '=data["order_data"].getCustomerUserFullName(data["order"])'
+                    additional_block_prefixes: ['order_body_column_element']

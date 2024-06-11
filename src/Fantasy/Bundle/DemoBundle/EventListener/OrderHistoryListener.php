@@ -41,7 +41,7 @@ class OrderHistoryListener
             'WITH',
             'customer_user.id = order1.customerUser'
         );
-        $query->addSelect('customer_user.firstName as customerUserFirstName, customer_user.lastName as customerUserLastName');
+        $query->addSelect('customer_user.firstName as customerUserFirstName, customer_user.lastName as customerUserLastName, customer_user.middleName as customerUserMiddleName');
     }
 
     /**

@@ -1,6 +1,14 @@
 {% set userFirstName = record.getValue('customerUserFirstName') %}
+{% set userMiddleName = record.getValue('customerUserMiddleName') %}
 {% set userLastName = record.getValue('customerUserLastName') %}
 
 <div>
-    {{ userFirstName }} {{ userLastName }}
+    <span>
+        {{ userFirstName }}
+        {% if userMiddleName is not empty %}
+            {{ userMiddleName }}
+        {% endif %}
+    </span>
+    <span>{{ userLastName }} </span>
+
 </div>
