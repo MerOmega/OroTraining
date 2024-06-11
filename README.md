@@ -105,14 +105,22 @@ datagrids:
 
 --------------------------
 
-### Task 7: Modify the Order History datagrid and the order detail page. (To be done)
+### Task 7: Modify the Order History datagrid and the order detail page.
 
 - Delete the Payment Method column
+
+- - Both columns came from Checkout and Order bundle, so there are a few alternatives to hide it, one is merging the datagrid
+with in the current datagrid.yml in the bundle, another is to create an event listener that catches the configuration on preBuild,
+i took the first approach, setting the render as false.
+
 - Add a new column with the full name of the user who made the purchase. This new column must be before the shipping address column and must have html formatting to style the displayed text.
   Example:
   JUAN ARMANDO PEREZ
-- On the order detail page add at the top (Order Information) the information of the person who made the purchase.
+- - Here i took the second approach and i created an event listener that adds the column with its configurations, the order columns here
+didnt have an order configured so again the two approaches, one merging the other modifing using an event listener. Here i decided to practice using the last one.
 
+- On the order detail page add at the top (Order Information) the information of the person who made the purchase.
+- - Simplest way I added a new block with that uses a data provider to search for the name of the customer_user
 ----
 
 ### Task 8: Create a new payment method (To be done)
