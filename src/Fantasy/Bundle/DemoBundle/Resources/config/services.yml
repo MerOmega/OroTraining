@@ -3,3 +3,9 @@ services:
         class: 'Fantasy\Bundle\DemoBundle\Layout\DataProvider\ProductProvider'
         tags:
             - { name: layout.data_provider, alias: product_stock }
+
+
+    fantasy_demo.event_listener.order_history_listener:
+        class: Fantasy\Bundle\DemoBundle\EventListener\OrderHistoryListener
+        tags:
+            - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.before.base-orders-grid, method: onBuildBefore }

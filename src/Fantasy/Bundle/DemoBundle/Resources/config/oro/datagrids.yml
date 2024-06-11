@@ -53,3 +53,20 @@ datagrids:
                 link: update_link
                 icon: 'edit'
                 acl_resource: 'demo_update'
+
+    frontend-orders-grid:
+        columns:
+#       Here is merged columns from the oro_checkout_grid/layout.yml its another alternative to define columns order
+#       in the OrderHistoryListener is the dynamical way to define columns order.
+#            identifier:
+#                order: 10
+#            createdAt:
+#                order: 20
+#            shippingAddress:
+#                order: 30
+#            total:
+#                order: 40
+#            paymentStatus:
+#                order: 50
+            paymentMethods:
+                renderable: false
