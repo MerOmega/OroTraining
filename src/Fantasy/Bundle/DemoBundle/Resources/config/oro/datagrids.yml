@@ -53,7 +53,10 @@ datagrids:
                 link: update_link
                 icon: 'edit'
                 acl_resource: 'demo_update'
-
+    frontend-checkouts-grid:
+        columns:
+            paymentMethod:
+                renderable: false
     frontend-orders-grid:
         columns:
 #       Here is merged columns from the oro_checkout_grid/layout.yml its another alternative to define columns order
