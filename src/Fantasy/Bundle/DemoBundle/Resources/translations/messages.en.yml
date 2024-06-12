@@ -1,0 +1,9 @@
+fantasy:
+    on_delivery:
+        settings:
+            labels.label: 'Labels'
+            short_labels.label: 'Short Labels'
+            transport.label: 'On Delivery'
+        channel_type:
+            label: 'On Delivery'
+        payment_method_message: 'Pay on delivery'

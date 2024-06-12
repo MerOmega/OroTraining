@@ -1,3 +1,6 @@
+parameters:
+    on_delivery.method.identifier_prefix.on_delivery: 'on_delivery'
+
 services:
     fantasy_demo.layout.data_provider.product:
         class: 'Fantasy\Bundle\DemoBundle\Layout\DataProvider\ProductProvider'
@@ -14,3 +17,65 @@ services:
         class: Fantasy\Bundle\DemoBundle\EventListener\OrderHistoryListener
         tags:
             - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.before.base-orders-grid, method: onBuildBefore }
+
+    fantasy_on_delivery.generator.on_delivery_config_identifier:
+        parent: oro_integration.generator.prefixed_identifier_generator
+        public: true
+        arguments:
+            - '%on_delivery.method.identifier_prefix.on_delivery%'
+
+    fantasy_on_delivery.integration.channel:
+        class: Fantasy\Bundle\DemoBundle\Integration\OnDeliveryChannelType
+        public: true
+        tags:
+            - { name: oro_integration.channel, type: on_delivery }
+
+    fantasy_on_delivery.integration.transport:
+        class: Fantasy\Bundle\DemoBundle\Integration\OnDeliveryTransport
+        public: false
+        tags:
+            - { name: oro_integration.transport, type: on_delivery, channel_type: on_delivery }
+
+    fantasy_on_delivery.factory.on_delivery_config:
+        class: Fantasy\Bundle\DemoBundle\PaymentMethod\Config\Factory\OnDeliveryConfigFactory
+        public: false
+        arguments:
+            - '@oro_locale.helper.localization'
+            - '@fantasy_on_delivery.generator.on_delivery_config_identifier'
+
+    fantasy_on_delivery.payment_method.config.provider:
+        class: Fantasy\Bundle\DemoBundle\PaymentMethod\Config\Provider\OnDeliveryConfigProvider
+        arguments:
+            - '@doctrine'
+            - '@logger'
+            - '@fantasy_on_delivery.factory.on_delivery_config'
+
+    fantasy_on_delivery.factory.method_view.on_delivery:
+        class: Fantasy\Bundle\DemoBundle\PaymentMethod\View\Factory\OnDeliveryViewFactory
+        public: false
+
+    fantasy_on_delivery.payment_method_view_provider.on_delivery:
+        class: Fantasy\Bundle\DemoBundle\PaymentMethod\View\Provider\OnDeliveryViewProvider
+        public: false
+        arguments:
+            - '@fantasy_on_delivery.payment_method.config.provider'
+            - '@fantasy_on_delivery.factory.method_view.on_delivery'
+        tags:
+            - { name: oro_payment.payment_method_view_provider }
+
+    on_delivery.factory.method.on_delivery:
+        class: Fantasy\Bundle\DemoBundle\PaymentMethod\Factory\OnDeliveryPaymentMethodFactory
+        public: false
+
+    fantasy_on_delivery.factory.method.on_delivery:
+        class: Fantasy\Bundle\DemoBundle\PaymentMethod\Factory\OnDeliveryPaymentMethodFactory
+        public: false
+
+    on_delivery.payment_method_provider.on_delivery:
+        class: Fantasy\Bundle\DemoBundle\PaymentMethod\Provider\OnDeliveryMethodProvider
+        public: false
+        arguments:
+            - '@fantasy_on_delivery.payment_method.config.provider'
+            - '@fantasy_on_delivery.factory.method.on_delivery'
+        tags:
+            - { name: oro_payment.payment_method_provider }
