@@ -63,15 +63,11 @@ services:
         tags:
             - { name: oro_payment.payment_method_view_provider }
 
-    on_delivery.factory.method.on_delivery:
-        class: Fantasy\Bundle\DemoBundle\PaymentMethod\Factory\OnDeliveryPaymentMethodFactory
-        public: false
-
     fantasy_on_delivery.factory.method.on_delivery:
         class: Fantasy\Bundle\DemoBundle\PaymentMethod\Factory\OnDeliveryPaymentMethodFactory
         public: false
 
-    on_delivery.payment_method_provider.on_delivery:
+    fantasy_on_delivery.payment_method_provider.on_delivery:
         class: Fantasy\Bundle\DemoBundle\PaymentMethod\Provider\OnDeliveryMethodProvider
         public: false
         arguments:
