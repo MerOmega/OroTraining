@@ -16,7 +16,7 @@ services:
     fantasy_demo.event_listener.order_history_listener:
         class: Fantasy\Bundle\DemoBundle\EventListener\OrderHistoryListener
         tags:
-            - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.before.base-orders-grid, method: onBuildBefore }
+            - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.before.frontend-orders-grid, method: onBuildBefore }
 
     fantasy_on_delivery.generator.on_delivery_config_identifier:
         parent: oro_integration.generator.prefixed_identifier_generator
