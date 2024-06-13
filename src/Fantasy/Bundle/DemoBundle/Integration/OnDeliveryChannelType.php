@@ -8,7 +8,7 @@ use Oro\Bundle\IntegrationBundle\Provider\IconAwareIntegrationInterface;
 class OnDeliveryChannelType implements ChannelInterface, IconAwareIntegrationInterface
 {
 
-    const TYPE = 'collect_on_delivery';
+    const TYPE = 'on_delivery';
 
     /**
      * {@inheritdoc}

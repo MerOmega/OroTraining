@@ -30,7 +30,7 @@ class OnDeliveryView implements PaymentMethodViewInterface
      */
     public function getBlock()
     {
-        return '_payment_methods_collect_on_delivery_widget';
+        return '_payment_methods_on_delivery_widget';
     }
 
     /**
