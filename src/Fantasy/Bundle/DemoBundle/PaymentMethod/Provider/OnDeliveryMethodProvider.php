@@ -39,11 +39,11 @@ class OnDeliveryMethodProvider extends AbstractPaymentMethodProvider
     {
         $configs = $this->configProvider->getPaymentConfigs();
         foreach ($configs as $config) {
-            $this->addCollectOnDeliveryMethod($config);
+            $this->addOnDeliveryMethod($config);
         }
     }
 
-    protected function addCollectOnDeliveryMethod(OnDeliveryConfigInterface $config)
+    protected function addOnDeliveryMethod(OnDeliveryConfigInterface $config)
     {
         $this->addMethod(
             $config->getPaymentMethodIdentifier(),

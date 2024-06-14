@@ -36,11 +36,11 @@ class OnDeliveryViewProvider extends AbstractPaymentMethodViewProvider
     {
         $configs = $this->configProvider->getPaymentConfigs();
         foreach ($configs as $config) {
-            $this->addCollectOnDeliveryView($config);
+            $this->addOnDeliveryView($config);
         }
     }
 
-    protected function addCollectOnDeliveryView(OnDeliveryConfigInterface $config)
+    protected function addOnDeliveryView(OnDeliveryConfigInterface $config)
     {
         $this->addView(
             $config->getPaymentMethodIdentifier(),

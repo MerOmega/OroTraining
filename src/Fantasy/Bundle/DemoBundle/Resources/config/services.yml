@@ -50,10 +50,12 @@ services:
             - '@logger'
             - '@fantasy_on_delivery.factory.on_delivery_config'
 
+##################################### OnDelivery Integration ##################################
+# This wasnt in the documentation but I assume is the service needed to inject in the provider
     fantasy_on_delivery.factory.method_view.on_delivery:
         class: Fantasy\Bundle\DemoBundle\PaymentMethod\View\Factory\OnDeliveryViewFactory
         public: false
-
+#****************************************************************************************
     fantasy_on_delivery.payment_method_view_provider.on_delivery:
         class: Fantasy\Bundle\DemoBundle\PaymentMethod\View\Provider\OnDeliveryViewProvider
         public: false
@@ -75,3 +77,13 @@ services:
             - '@fantasy_on_delivery.factory.method.on_delivery'
         tags:
             - { name: oro_payment.payment_method_provider }
+
+    fantasy_on_delivery.event_listener.on_delivery_order_listener:
+        class: Fantasy\Bundle\DemoBundle\EventListener\OnDeliveryOrderListener
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+            - '@oro_entity.doctrine_helper'
+            - '@fantasy_on_delivery.payment_method.config.provider'
+##################################### End of OnDelivery Integration ##################################

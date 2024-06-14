@@ -9,14 +9,9 @@ use Oro\Bundle\PaymentBundle\Method\PaymentMethodInterface;
 
 class OnDelivery implements PaymentMethodInterface
 {
-    /**
-     * @var OnDeliveryConfigInterface
-     */
-    private $config;
 
-    public function __construct(OnDeliveryConfigInterface $config)
+    public function __construct(private OnDeliveryConfigInterface $config)
     {
-        $this->config = $config;
     }
 
     /**
@@ -25,7 +20,7 @@ class OnDelivery implements PaymentMethodInterface
     public function execute($action, PaymentTransaction $paymentTransaction)
     {
         if ($action === self::PURCHASE) {
-            $paymentTransaction->setAction(PaymentMethodInterface::INVOICE);
+            $paymentTransaction->setAction(PaymentMethodInterface::PURCHASE);
         } elseif ($action === self::CHARGE) {
             $paymentTransaction->setAction(PaymentMethodInterface::CHARGE);
         }
