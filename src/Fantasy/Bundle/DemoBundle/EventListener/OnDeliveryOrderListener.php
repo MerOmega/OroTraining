@@ -3,57 +3,109 @@
 namespace Fantasy\Bundle\DemoBundle\EventListener;
 
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Doctrine\Persistence\ManagerRegistry;
-use Fantasy\Bundle\DemoBundle\PaymentMethod\Config\Provider\OnDeliveryConfigProvider;
+
+use Fantasy\Bundle\DemoBundle\PaymentMethod\OnDelivery;
 use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Oro\Bundle\OrderBundle\Entity\Order;
 use Oro\Bundle\PaymentBundle\Entity\PaymentTransaction;
-use Fantasy\Bundle\DemoBundle\PaymentMethod\OnDelivery;
+use Oro\Bundle\PaymentBundle\Entity\Repository\PaymentTransactionRepository;
+use Oro\Bundle\PaymentBundle\Method\Provider\PaymentMethodProviderInterface;
+use Oro\Bundle\PaymentBundle\Provider\PaymentTransactionProvider;
 
 class OnDeliveryOrderListener
 {
+    protected array $orders = [];
 
     public function __construct(
-        private readonly ManagerRegistry          $doctrine,
-        private readonly DoctrineHelper           $doctrineHelper,
-        private readonly OnDeliveryConfigProvider $configProvider,
+        private readonly DoctrineHelper                 $doctrineHelper,
+        private readonly PaymentMethodProviderInterface $paymentMethodProvider,
+        private readonly PaymentTransactionProvider     $paymentTransactionProvider
     )
     {
     }
 
 
     /**
-     * TODO If this is correct needs to be optimized
+     * It checks if the order status has changed and if it has, it checks if the order has a payment transaction
      *
-     * Before the update checks if its an Order, if its checks that the internal status is shipped and the payment method is OnDelivery
-     * If it is, it sets the action to charge
-     *
+     * @param Order $order
      * @param PreUpdateEventArgs $event
      * @return void
      */
-    public function preUpdate(PreUpdateEventArgs $event)
+    public function preUpdate(Order $order, PreUpdateEventArgs $event): void
     {
-        $entity = $event->getObject();
+        $orderStatus = $order->getInternalStatus()->getId();
+        $changeSet   = $event->getEntityChangeSet();
 
-        if (!$entity instanceof Order) {
+        if (!isset($changeSet['internal_status']))
+            return;
+
+        if ($this->sameState($orderStatus, $changeSet['internal_status'])) {
             return;
         }
 
-        $paymentRepository = $this->doctrineHelper->getEntityRepository(PaymentTransaction::class);
-        $paymentMethod     = $paymentRepository->getPaymentMethods(Order::class, [$entity->getId()]);
+        /** @var PaymentTransactionRepository $repository */
+        $repository = $this->doctrineHelper->getEntityRepositoryForClass(PaymentTransaction::class);
 
-        if (!isset($paymentMethod[$entity->getId()]) || !isset($paymentMethod[$entity->getId()][0])) {
-            return;
+        /** @var PaymentTransaction $authorizePaymentTransaction */
+        $authorizePaymentTransaction = $repository->findOneBy([
+            'entityClass'      => 'Oro\Bundle\OrderBundle\Entity\Order',
+            'entityIdentifier' => $order->getId(),
+            'action'           => OnDelivery::PURCHASE,
+            'active'           => true,
+            'successful'       => true
+        ]);
+
+        if ($authorizePaymentTransaction instanceof PaymentTransaction) {
+            $paymentMethodId = $authorizePaymentTransaction->getPaymentMethod();
+            if ($this->paymentMethodProvider->hasPaymentMethod($paymentMethodId)) {
+                $this->orders[] = $order;
+            }
         }
-        $transactionType = $paymentMethod[$entity->getId()][0];
-        $changeSet       = $event->getEntityChangeSet();
-        $paymentConfig   = $this->configProvider->getPaymentConfig($transactionType);
+    }
 
-        if (isset($changeSet['internal_status'][1]) && $changeSet['internal_status'][1]->getId() === 'shipped' && $paymentConfig != null) {
-            $paymentTransaction = $paymentRepository->find($entity->getId());
-            $paymentTransaction->setAction(OnDelivery::CHARGE);
-            $this->doctrine->getManager()->persist($paymentTransaction);
-            $this->doctrine->getManager()->flush();
+    private function sameState(string $orderStatus, array $previousStatus): bool
+    {
+        if (isset($previousStatus[0]) && $orderStatus === 'shipped') {
+            return $previousStatus[0]->getId() === $orderStatus;
+        }
+        return false;
+    }
+
+    public function doCharge(Order $order): void
+    {
+        /** @var PaymentTransactionRepository $repository */
+        $repository = $this->doctrineHelper->getEntityRepositoryForClass(PaymentTransaction::class);
+        /** @var PaymentTransaction $authorizePaymentTransaction */
+        $authorizePaymentTransaction = $repository->findOneBy([
+            'entityClass' => 'Oro\Bundle\OrderBundle\Entity\Order',
+            'entityIdentifier' => $order->getId(),
+            'action' => OnDelivery::PURCHASE,
+            'active' => true,
+            'successful' => true
+        ]);
+
+        $authorizePaymentTransaction->setAmount(intval($order->getTotal()));
+        $paymentMethod = $this->paymentMethodProvider
+            ->getPaymentMethod($authorizePaymentTransaction->getPaymentMethod());
+
+        $chargePaymentTransaction = $this->paymentTransactionProvider
+            ->createPaymentTransactionByParentTransaction(
+                OnDelivery::CHARGE,
+                $authorizePaymentTransaction
+            );
+        $paymentMethod->execute(OnDelivery::CHARGE, $chargePaymentTransaction);
+        $this->paymentTransactionProvider->savePaymentTransaction($chargePaymentTransaction);
+        $this->paymentTransactionProvider->savePaymentTransaction($authorizePaymentTransaction);
+    }
+
+
+    public function postFlush(): void
+    {
+        if (!empty($this->orders)) {
+            $change = $this->orders;
+            $this->orders = [];
+            array_walk($change, [$this, 'doCharge']);
         }
     }
 }

@@ -80,10 +80,11 @@ services:
 
     fantasy_on_delivery.event_listener.on_delivery_order_listener:
         class: Fantasy\Bundle\DemoBundle\EventListener\OnDeliveryOrderListener
-        tags:
-            - { name: doctrine.event_listener, event: preUpdate }
         arguments:
-            - '@Doctrine\Persistence\ManagerRegistry'
             - '@oro_entity.doctrine_helper'
-            - '@fantasy_on_delivery.payment_method.config.provider'
+            - '@oro_payment.payment_method.composite_provider'
+            - '@oro_payment.provider.payment_transaction'
+        tags:
+            - { name: doctrine.orm.entity_listener, entity: Oro\Bundle\OrderBundle\Entity\Order, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
 ##################################### End of OnDelivery Integration ##################################

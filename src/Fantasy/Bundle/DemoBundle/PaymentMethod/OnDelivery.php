@@ -22,13 +22,24 @@ class OnDelivery implements PaymentMethodInterface
         if ($action === self::PURCHASE) {
             $paymentTransaction->setAction(PaymentMethodInterface::PURCHASE);
         } elseif ($action === self::CHARGE) {
-            $paymentTransaction->setAction(PaymentMethodInterface::CHARGE);
+            $this->charge($paymentTransaction);
         }
 
         $paymentTransaction->setActive(true);
         $paymentTransaction->setSuccessful(true);
 
         return [];
+    }
+
+    /**
+     * As a practice im going to add later an extra logic here like connecting with a dummy API from
+     * another container to simulate a real payment method
+     *
+     * @param PaymentTransaction $paymentTransaction
+     */
+    protected function charge(PaymentTransaction $paymentTransaction): void
+    {
+        $paymentTransaction->setAction(PaymentMethodInterface::CHARGE);
     }
 
     /**
