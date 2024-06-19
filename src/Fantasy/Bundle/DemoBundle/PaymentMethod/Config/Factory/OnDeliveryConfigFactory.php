@@ -10,22 +10,11 @@ use Oro\Bundle\LocaleBundle\Helper\LocalizationHelper;
 
 class OnDeliveryConfigFactory implements OnDeliveryConfigFactoryInterface
 {
-    /**
-     * @var LocalizationHelper
-     */
-    private $localizationHelper;
-
-    /**
-     * @var IntegrationIdentifierGeneratorInterface
-     */
-    private $identifierGenerator;
-
     public function __construct(
-        LocalizationHelper $localizationHelper,
-        IntegrationIdentifierGeneratorInterface $identifierGenerator
-    ) {
-        $this->localizationHelper = $localizationHelper;
-        $this->identifierGenerator = $identifierGenerator;
+        private readonly LocalizationHelper                      $localizationHelper,
+        private readonly IntegrationIdentifierGeneratorInterface $identifierGenerator
+    )
+    {
     }
 
     /**
@@ -33,14 +22,14 @@ class OnDeliveryConfigFactory implements OnDeliveryConfigFactoryInterface
      */
     public function create(OnDeliverySettings $settings)
     {
-        $params = [];
+        $params  = [];
         $channel = $settings->getChannel();
 
-        $params[OnDeliveryConfig::FIELD_LABEL] = $this->getLocalizedValue($settings->getLabels());
+        $params[OnDeliveryConfig::FIELD_LABEL]       = $this->getLocalizedValue($settings->getLabels());
         $params[OnDeliveryConfig::FIELD_SHORT_LABEL] = $this->getLocalizedValue($settings->getShortLabels());
         $params[OnDeliveryConfig::FIELD_ADMIN_LABEL] = $channel->getName();
-        $params[OnDeliveryConfig::FIELD_PAYMENT_METHOD_IDENTIFIER] =
-            $this->identifierGenerator->generateIdentifier($channel);
+        $params[OnDeliveryConfig::FIELD_PAYMENT_METHOD_IDENTIFIER]
+                                                     = $this->identifierGenerator->generateIdentifier($channel);
 
         return new OnDeliveryConfig($params);
     }

@@ -12,20 +12,11 @@ use Oro\Bundle\PaymentBundle\Method\View\AbstractPaymentMethodViewProvider;
  */
 class OnDeliveryViewProvider extends AbstractPaymentMethodViewProvider
 {
-    /** @var OnDeliveryViewFactoryInterface */
-    private $factory;
-
-    /** @var OnDeliveryConfigProviderInterface */
-    private $configProvider;
-
     public function __construct(
-        OnDeliveryConfigProviderInterface $configProvider,
-        OnDeliveryViewFactoryInterface    $factory
+        private readonly OnDeliveryConfigProviderInterface $configProvider,
+        private readonly OnDeliveryViewFactoryInterface $factory
     )
     {
-        $this->factory        = $factory;
-        $this->configProvider = $configProvider;
-
         parent::__construct();
     }
 

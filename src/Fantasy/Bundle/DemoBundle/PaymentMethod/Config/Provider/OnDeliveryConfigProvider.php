@@ -11,34 +11,11 @@ use Psr\Log\LoggerInterface;
 
 class OnDeliveryConfigProvider implements OnDeliveryConfigProviderInterface
 {
-    /**
-     * @var ManagerRegistry
-     */
-    protected $doctrine;
-
-    /**
-     * @var OnDeliveryConfigFactoryInterface
-     */
-    protected $configFactory;
-
-    /**
-     * @var OnDeliveryConfigInterface[]
-     */
-    protected $configs;
-
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
-
     public function __construct(
-        ManagerRegistry $doctrine,
-        LoggerInterface $logger,
-        OnDeliveryConfigFactoryInterface $configFactory
+        protected ManagerRegistry $doctrine,
+        protected LoggerInterface $logger,
+        protected OnDeliveryConfigFactoryInterface $configFactory
     ) {
-        $this->doctrine = $doctrine;
-        $this->logger = $logger;
-        $this->configFactory = $configFactory;
     }
 
     /**
