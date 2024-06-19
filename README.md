@@ -8,6 +8,19 @@ Oro Training Application
 This is a training application for Oro Platform. It is a simple application that demonstrates the basic features of Oro.
 The training consists of a series of tasks.
 
+<!-- TOC -->
+* [Oro Training Application](#oro-training-application)
+  * [Description](#description)
+    * [Task 1: Platform Installation](#task-1-platform-installation)
+    * [Task 2: Create the new bundle](#task-2-create-the-new-bundle)
+    * [Task 3: Create a modify the PDP of products](#task-3-create-a-modify-the-pdp-of-products)
+    * [Task 4: Create a new entity](#task-4-create-a-new-entity)
+    * [Task 5: Add a new field to the entity](#task-5-add-a-new-field-to-the-entity)
+    * [Task 6: CRUD for the entity](#task-6-crud-for-the-entity)
+    * [Task 7: Modify the Order History datagrid and the order detail page.](#task-7-modify-the-order-history-datagrid-and-the-order-detail-page)
+    * [Task 8: Create a new payment method](#task-8-create-a-new-payment-method)
+<!-- TOC -->
+
 ### Task 1: Platform Installation
 Uses warp to create the project, after that run the following command to install:
 ```bash
@@ -123,7 +136,21 @@ didnt have an order configured so again the two approaches, one merging the othe
 - - Simplest way I added a new block with that uses a data provider to search for the name of the customer_user
 ----
 
-### Task 8: Create a new payment method (To be done)
+### Task 8: Create a new payment method
 
 Create a new payment method called “on Delivery”. This new method need to be implemented by integration following Oro rules. This payment method will support 2 actions PURCHASE and CHARGE. When the customer select this method and finish the checkout the transaction will remain as PURCHASE.
 We have to implement an entity listener for Orders, so when the order with this payment method change the internal status to SHIPPED we have to implemente the CHARGE action for the method.
+
+[How to create a payment method](https://doc.oroinc.com/5.1/backend/extend-commerce/payment/#create-payment-method-integrations)
+
+Follow the documentation to create a payment method, the last part is wrong as obviously the layout.html is a yaml file.
+
+This also was missing in the documentation which you will need to inject the view factory in the other services
+
+````yaml
+            fantasy_on_delivery.factory.method_view.on_delivery:
+              class: Fantasy\Bundle\DemoBundle\PaymentMethod\View\Factory\OnDeliveryViewFactory
+    public: false
+````
+
+For the event listener is just doctrine, except for the PaymentTransaction part, when you create the transaction you need to set the payment method and the action, and when you update the order you need to check if the payment method is the one you are looking for and the status is shipped, then you need to update the transaction to charge, also you need to set the transaction as father modified one.
