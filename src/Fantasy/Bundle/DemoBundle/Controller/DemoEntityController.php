@@ -35,7 +35,7 @@ class DemoEntityController extends AbstractController
 
     /**
      * @Route("/view/{id}", name="view", requirements={"id"="\d+"})
-     * @Template
+     * @Template("@FantasyDemo/DemoEntity/index.html.twig")
      * @Acl(
      *       id="demo_view",
      *       type="entity",
