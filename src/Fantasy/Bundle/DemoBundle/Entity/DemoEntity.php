@@ -4,6 +4,7 @@ namespace Fantasy\Bundle\DemoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Fantasy\Bundle\DemoBundle\Entity\Repository\DemoEntityRepository;
+use Fantasy\Bundle\DemoBundle\Enum\EType;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks()
  * @Config(
  *     routeName="demo_index",
- *     routeView="demo_view",
+ *     routeView="demo_index",
  *     routeCreate="demo_create",
  *     defaultValues={
  *         "entity"={
@@ -75,6 +76,17 @@ class DemoEntity implements ExtendEntityInterface
      */
     private $description;
 
+    /**
+     * @ORM\Column (type="string", length=50, enumType=EType::class)
+     * @ConfigField(
+     *     extend={
+     *         "is_extend"=true,
+     *     }
+     * )
+     */
+    private ?EType $type = null;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -99,6 +111,18 @@ class DemoEntity implements ExtendEntityInterface
     public function setDescription(string $description): self
     {
         $this->description = $description;
+        return $this;
+    }
+
+    public function getType(): ?EType
+    {
+        return $this->type;
+    }
+
+    public function setType(?EType $type): self
+    {
+        $this->type = $type;
+
         return $this;
     }
 }

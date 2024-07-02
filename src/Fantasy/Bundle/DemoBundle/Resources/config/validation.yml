@@ -1,4 +1,0 @@
-Fantasy\Bundle\DemoBundle\Entity\DemoEntity:
-    properties:
-        type:
-            - NotBlank: ~

@@ -11,8 +11,6 @@ services:
         class: 'Fantasy\Bundle\DemoBundle\Layout\DataProvider\OrderProvider'
         tags:
             - { name: layout.data_provider, alias: order_data }
-
-
     fantasy_demo.event_listener.order_history_listener:
         class: Fantasy\Bundle\DemoBundle\EventListener\OrderHistoryListener
         tags:
@@ -88,3 +86,8 @@ services:
             - { name: doctrine.orm.entity_listener, entity: Oro\Bundle\OrderBundle\Entity\Order, event: preUpdate }
             - { name: doctrine.event_listener, event: postFlush }
 ##################################### End of OnDelivery Integration ##################################
+##################################### Enum Data Transformer ##########################################
+    Fantasy\Bundle\DemoBundle\Formatter\EnumDataTransformer:
+        tags:
+            - { name: oro_datagrid.extension.formatter.property, type: enum_type }
+##################################### End of Enum Data Transformer ##################################
