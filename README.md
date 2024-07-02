@@ -1,6 +1,9 @@
 Oro Training Application
 ==================================
 
+>[!IMPORTANT]
+>[Check the wiki for more detailed and updated info](https://github.com/MerOmega/OroTraining/wiki)
+
 ## Description
 
 --------------------
