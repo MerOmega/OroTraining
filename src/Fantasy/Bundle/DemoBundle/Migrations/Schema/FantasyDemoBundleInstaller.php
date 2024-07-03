@@ -55,20 +55,8 @@ class FantasyDemoBundleInstaller implements Installation, ExtendExtensionAwareIn
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 250]);
         $table->addColumn('description', 'string', ['length' => 200]);
+        $table->addColumn('type', 'string', ['length' => 50]);
         $table->setPrimaryKey(['id']);
-
-        $this->extendExtension->addEnumField(
-            $schema,
-            $table,
-            'type',
-            DemoEntity::ENUM_CODE_TYPE,
-            false,
-            false,
-            [
-                'extend' => ['owner' => ExtendScope::OWNER_CUSTOM],
-                'entity' => ['label' => 'Type']
-            ]
-        );
     }
 
     /**

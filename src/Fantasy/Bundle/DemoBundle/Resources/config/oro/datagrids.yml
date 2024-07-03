@@ -8,6 +8,7 @@ datagrids:
                     - d.id
                     - d.name
                     - d.description
+                    - d.type
                 from:
                     - { table: 'Fantasy\Bundle\DemoBundle\Entity\DemoEntity', alias: d }
         columns:
@@ -17,6 +18,10 @@ datagrids:
                 label: 'Name'
             description:
                 label: 'Description'
+            type:
+                label: 'Type'
+                type: enum_type
+
         sorters:
             columns:
                 name:
