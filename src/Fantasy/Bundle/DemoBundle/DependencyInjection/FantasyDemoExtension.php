@@ -16,5 +16,6 @@ class FantasyDemoExtension extends Extension
         $loader->load('services.yml');
         $loader->load('controllers.yml');
         $loader->load('form.yml');
+        $loader->load('commands.yml');
     }
 }

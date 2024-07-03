@@ -27,6 +27,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *             "entity_alias"="DemoEntity",
  *             "entity_plural_alias"="DemoEntities"
  *         },
+ *              "security"={
+ *              "type"="ACL",
+ *              "permissions"="All",
+ *              "group_name"="",
+ *              "category"="",
+ *          },
  *          "form" = {
  *              "form_type"="Fantasy\Bundle\DemoBundle\Form\Type\DemoType",
  *              "grid_name"="demo-grid"

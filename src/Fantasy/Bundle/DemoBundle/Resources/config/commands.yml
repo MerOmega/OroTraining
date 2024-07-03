@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        public: false
+
+    Fantasy\Bundle\DemoBundle\Command\RelateUserRoleCommand:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: console.command }
