@@ -7,3 +7,7 @@ fantasy:
         channel_type:
             label: 'On Delivery'
         payment_method_message: 'Pay on delivery'
+    permission:
+        test:
+            label: 'Test Permission'
+            description: 'Test Permission Description'

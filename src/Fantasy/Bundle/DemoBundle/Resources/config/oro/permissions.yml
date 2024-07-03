@@ -1,0 +1,4 @@
+oro_permissions:
+    TEST_PERMISSION:
+        label: fantasy.permission.test.label
+        description: fantasy.permission.test.description
