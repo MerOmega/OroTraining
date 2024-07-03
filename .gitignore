@@ -219,5 +219,6 @@ dist
 ### Symfony Patch ###
 /web/css/
 /web/js/
-public/media/cache
+public/media/cache/
+public/build/
 # End of https://www.toptal.com/developers/gitignore/api/symfony,node
