@@ -114,9 +114,9 @@ class DemoEntity implements ExtendEntityInterface
         return $this;
     }
 
-    public function getType(): ?EType
+    public function getType(): ?string
     {
-        return $this->type;
+        return $this->type->getLabel();
     }
 
     public function setType(?EType $type): self
