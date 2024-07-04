@@ -1,4 +1,7 @@
 fantasy:
+    demo:
+        demoentity:
+            entity_plural_label: 'Demo Entities'
     on_delivery:
         settings:
             labels.label: 'Labels'
