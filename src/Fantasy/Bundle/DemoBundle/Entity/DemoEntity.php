@@ -114,6 +114,13 @@ class DemoEntity implements ExtendEntityInterface
         return $this;
     }
 
+    /**
+     * Oro seems to not support enums types at the moment, so when a twig needs this field
+     * calls the nameProvider to get a string. As an enum is a class, we need to return a string
+     * so it doesn't break.
+     *
+     * @return string|null
+     */
     public function getType(): ?string
     {
         return $this->type->getLabel();
