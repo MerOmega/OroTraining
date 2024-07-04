@@ -123,7 +123,7 @@ class DemoEntity implements ExtendEntityInterface
      */
     public function getType(): ?string
     {
-        return $this->type->getLabel();
+        return $this->type?->getLabel();
     }
 
     public function setType(?EType $type): self
