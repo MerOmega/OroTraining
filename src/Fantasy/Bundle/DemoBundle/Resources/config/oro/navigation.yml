@@ -1,0 +1,26 @@
+navigation:
+    menu_config:
+        items:
+            demo_entity:
+                label: 'Demo Entity'
+                uri:     '#'
+                position: 500
+                extras:
+                    description: 'This is a demo entity'
+                    icon: 'fa-user-secret'
+
+            demo_entity_list:
+                label: 'List of demo Entities'
+                route: 'demo_index'
+                position: 20
+
+        tree:
+            application_menu:
+                children:
+                    demo_entity:
+                        children:
+                            demo_entity_list: ~
+
+    titles:
+        demo_index: ~
+
